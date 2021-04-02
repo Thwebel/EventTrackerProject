@@ -1,5 +1,7 @@
 package com.skilldistillery.playlist.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,12 @@ public class PlaylistController {
 	@Autowired
 	private PlaylistService plService;
 
+	@GetMapping("playlists")
+	public List<Playlist> index() {
+		
+		return	plService.index();
+	}
+	
 	@GetMapping("playlists/{id}")
 	public Playlist show(@PathVariable Integer id) {
 		

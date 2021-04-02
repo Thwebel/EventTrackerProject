@@ -19,8 +19,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	@Override
 	public List<Playlist> index() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return plRepo.findAll();
 	}
 
 	@Override
