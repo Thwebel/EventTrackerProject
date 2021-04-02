@@ -25,7 +25,94 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   `title` VARCHAR(200) NULL,
   `description` TEXT NULL,
   `curator` VARCHAR(100) NULL,
+  `date_created` DATETIME NULL,
+  `last_updated` DATETIME NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `artist`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `artist` ;
+
+CREATE TABLE IF NOT EXISTS `artist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(300) NULL,
+  `formation_date` DATETIME NULL,
+  `artwork` VARCHAR(500) NULL,
+  `description` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `album`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `album` ;
+
+CREATE TABLE IF NOT EXISTS `album` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(300) NULL,
+  `track_count` INT NULL,
+  `release_year` INT NULL,
+  `artwork` VARCHAR(500) NULL,
+  `artist_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_album_artist1_idx` (`artist_id` ASC),
+  CONSTRAINT `fk_album_artist1`
+    FOREIGN KEY (`artist_id`)
+    REFERENCES `artist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `track`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `track` ;
+
+CREATE TABLE IF NOT EXISTS `track` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(300) NULL,
+  `duration` TIME NULL,
+  `Genre` VARCHAR(100) NULL,
+  `description` TEXT NULL,
+  `youtube_link` VARCHAR(500) NULL,
+  `track_number` INT NULL,
+  `album_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_track_album1_idx` (`album_id` ASC),
+  CONSTRAINT `fk_track_album1`
+    FOREIGN KEY (`album_id`)
+    REFERENCES `album` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `playlist_has_track`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `playlist_has_track` ;
+
+CREATE TABLE IF NOT EXISTS `playlist_has_track` (
+  `playlist_id` INT NOT NULL,
+  `Track_id` INT NOT NULL,
+  PRIMARY KEY (`playlist_id`, `Track_id`),
+  INDEX `fk_playlist_has_Track_Track1_idx` (`Track_id` ASC),
+  INDEX `fk_playlist_has_Track_playlist_idx` (`playlist_id` ASC),
+  CONSTRAINT `fk_playlist_has_Track_playlist`
+    FOREIGN KEY (`playlist_id`)
+    REFERENCES `playlist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_playlist_has_Track_Track1`
+    FOREIGN KEY (`Track_id`)
+    REFERENCES `track` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
@@ -44,7 +131,51 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`) VALUES (1, 'Tommy\'s Playlist', 'Really good', 'Asha');
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`) VALUES (1, 'A', 'First playlist I created for Ash', 'Webel', '2018-02-14 10:30:30', '2018-02-14 10:30:30');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `artist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `playlistdb`;
+INSERT INTO `artist` (`id`, `name`, `formation_date`, `artwork`, `description`) VALUES (1, 'Cyrille Aimée', NULL, NULL, NULL);
+INSERT INTO `artist` (`id`, `name`, `formation_date`, `artwork`, `description`) VALUES (2, 'Artic Monkeys', NULL, NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `album`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `playlistdb`;
+INSERT INTO `album` (`id`, `name`, `track_count`, `release_year`, `artwork`, `artist_id`) VALUES (1, 'Let\'s Get Lost', 14, 2016, NULL, 1);
+INSERT INTO `album` (`id`, `name`, `track_count`, `release_year`, `artwork`, `artist_id`) VALUES (2, 'Whatever People Sam I Am, That\'s What I\'m Not', 12, 206, NULL, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `track`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `playlistdb`;
+INSERT INTO `track` (`id`, `name`, `duration`, `Genre`, `description`, `youtube_link`, `track_number`, `album_id`) VALUES (1, 'Each Day (feat. Matt Simons)', '00:03:26', 'Vocal Jazz', NULL, 'https://www.youtube.com/watch?v=IBBqpYlHHpY&ab_channel=CyrilleAim%C3%A9e-Topic', 12, 1);
+INSERT INTO `track` (`id`, `name`, `duration`, `Genre`, `description`, `youtube_link`, `track_number`, `album_id`) VALUES (2, 'Mardy Bum', '00:02:57', 'Alternative', NULL, NULL, 9, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `playlist_has_track`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `playlistdb`;
+INSERT INTO `playlist_has_track` (`playlist_id`, `Track_id`) VALUES (1, 1);
+INSERT INTO `playlist_has_track` (`playlist_id`, `Track_id`) VALUES (1, 2);
 
 COMMIT;
 
