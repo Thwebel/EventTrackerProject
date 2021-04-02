@@ -1,9 +1,15 @@
 package com.skilldistillery.playlist.entities;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity 
 public class Playlist {
@@ -17,6 +23,14 @@ public class Playlist {
 	private String description;
 	
 	private String curator;
+	
+	@Column(name="date_created")
+	@CreationTimestamp
+	private LocalDateTime dateCreated;
+
+	@Column(name="last_updated")
+	@UpdateTimestamp
+	private LocalDateTime lastUpdated;
 
 	// Methods
 	
@@ -63,6 +77,22 @@ public class Playlist {
 
 	public void setCurator(String curator) {
 		this.curator = curator;
+	}
+
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public LocalDateTime getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(LocalDateTime lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 	@Override

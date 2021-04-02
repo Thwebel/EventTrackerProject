@@ -51,7 +51,10 @@ class PlaylistTest {
 	@DisplayName("Test Playlist Mappings")
 	void test() {
 		assertNotNull(playlist);
-		assertEquals("Tommy's Playlist", playlist.getTitle());
+		assertEquals("A", playlist.getTitle());
+		assertEquals("First playlist I created for Ash", playlist.getDescription());
+		assertEquals("Webel", playlist.getCurator());
+		assertEquals("2018-02-14T10:30:30", playlist.getDateCreated().toString());
 		
 	}
 
