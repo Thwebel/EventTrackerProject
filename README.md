@@ -10,5 +10,5 @@ TODO: Link to deployed app, login info if needed
 
 | HTTP Method | Resource URI   | Request Body | Returns              |
 |-------------|----------------|--------------|----------------------|
-|Get          | `api/playlists`|              | List&lt;Playlist&lt; |
+|Get          | `api/playlists`|              | List&lt;Playlist&gt; |
 |Get          | `api/playlists/{id}`|         | Playlist             |
