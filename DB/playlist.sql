@@ -77,16 +77,23 @@ CREATE TABLE IF NOT EXISTS `track` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(300) NULL,
   `duration` TIME NULL,
-  `Genre` VARCHAR(100) NULL,
+  `genre` VARCHAR(100) NULL,
   `description` TEXT NULL,
   `youtube_link` VARCHAR(500) NULL,
   `track_number` INT NULL,
   `album_id` INT NULL,
+  `artist_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_track_album1_idx` (`album_id` ASC),
+  INDEX `fk_track_artist1_idx` (`artist_id` ASC),
   CONSTRAINT `fk_track_album1`
     FOREIGN KEY (`album_id`)
     REFERENCES `album` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_track_artist1`
+    FOREIGN KEY (`artist_id`)
+    REFERENCES `artist` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -99,9 +106,9 @@ DROP TABLE IF EXISTS `playlist_has_track` ;
 
 CREATE TABLE IF NOT EXISTS `playlist_has_track` (
   `playlist_id` INT NOT NULL,
-  `Track_id` INT NOT NULL,
-  PRIMARY KEY (`playlist_id`, `Track_id`),
-  INDEX `fk_playlist_has_Track_Track1_idx` (`Track_id` ASC),
+  `track_id` INT NOT NULL,
+  PRIMARY KEY (`playlist_id`, `track_id`),
+  INDEX `fk_playlist_has_Track_Track1_idx` (`track_id` ASC),
   INDEX `fk_playlist_has_Track_playlist_idx` (`playlist_id` ASC),
   CONSTRAINT `fk_playlist_has_Track_playlist`
     FOREIGN KEY (`playlist_id`)
@@ -109,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `playlist_has_track` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_playlist_has_Track_Track1`
-    FOREIGN KEY (`Track_id`)
+    FOREIGN KEY (`track_id`)
     REFERENCES `track` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -163,8 +170,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `track` (`id`, `name`, `duration`, `Genre`, `description`, `youtube_link`, `track_number`, `album_id`) VALUES (1, 'Each Day (feat. Matt Simons)', '00:03:26', 'Vocal Jazz', NULL, 'https://www.youtube.com/watch?v=IBBqpYlHHpY&ab_channel=CyrilleAim%C3%A9e-Topic', 12, 1);
-INSERT INTO `track` (`id`, `name`, `duration`, `Genre`, `description`, `youtube_link`, `track_number`, `album_id`) VALUES (2, 'Mardy Bum', '00:02:57', 'Alternative', NULL, NULL, 9, 2);
+INSERT INTO `track` (`id`, `name`, `duration`, `genre`, `description`, `youtube_link`, `track_number`, `album_id`, `artist_id`) VALUES (1, 'Each Day (feat. Matt Simons)', '00:03:26', 'Vocal Jazz', NULL, 'https://www.youtube.com/watch?v=IBBqpYlHHpY&ab_channel=CyrilleAim%C3%A9e-Topic', 12, 1, 1);
+INSERT INTO `track` (`id`, `name`, `duration`, `genre`, `description`, `youtube_link`, `track_number`, `album_id`, `artist_id`) VALUES (2, 'Mardy Bum', '00:02:57', 'Alternative', NULL, NULL, 9, 2, 2);
 
 COMMIT;
 
@@ -174,8 +181,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `playlist_has_track` (`playlist_id`, `Track_id`) VALUES (1, 1);
-INSERT INTO `playlist_has_track` (`playlist_id`, `Track_id`) VALUES (1, 2);
+INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 1);
+INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 2);
 
 COMMIT;
 

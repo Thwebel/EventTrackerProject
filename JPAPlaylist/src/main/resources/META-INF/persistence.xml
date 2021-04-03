@@ -9,7 +9,10 @@
     </provider>
     
     <!-- entities -->
+    <class>com.skilldistillery.playlist.entities.Album</class>
+    <class>com.skilldistillery.playlist.entities.Artist</class>
     <class>com.skilldistillery.playlist.entities.Playlist</class>
+    <class>com.skilldistillery.playlist.entities.Track</class>
     <!-- entities -->
 
     <properties>

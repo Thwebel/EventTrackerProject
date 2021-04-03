@@ -1,12 +1,14 @@
 package com.skilldistillery.playlist.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,6 +33,9 @@ public class Playlist {
 	@Column(name="last_updated")
 	@UpdateTimestamp
 	private LocalDateTime lastUpdated;
+	
+	@ManyToMany(mappedBy = "playlists")
+	private List<Track> tracks;
 
 	// Methods
 	
@@ -93,6 +98,14 @@ public class Playlist {
 
 	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	public List<Track> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(List<Track> tracks) {
+		this.tracks = tracks;
 	}
 
 	@Override

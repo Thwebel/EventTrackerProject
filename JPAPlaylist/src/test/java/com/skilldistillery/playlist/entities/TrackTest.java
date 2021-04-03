@@ -2,12 +2,10 @@ package com.skilldistillery.playlist.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,13 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlaylistTest {
-	
+class TrackTest {
+
 	private static EntityManagerFactory emf;
 	
 	private EntityManager em;
 	
-	private Playlist playlist;
+	private Track track;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -38,31 +36,31 @@ class PlaylistTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		playlist = em.find(Playlist.class, 1);
+		track = em.find(Track.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em = null;
-		playlist = null;
+		track = null;
 	}
+
 
 	@Test
-	@DisplayName("Test Playlist Mappings")
-	void test() {
-		assertNotNull(playlist);
-		assertEquals("A", playlist.getTitle());
-		assertEquals("First playlist I created for Ash", playlist.getDescription());
-		assertEquals("Webel", playlist.getCurator());
-		assertEquals("2018-02-14T10:30:30", playlist.getDateCreated().toString());
+	@DisplayName("Test Track Mappings")
+	void test0() {
+		assertNotNull(track);
+		assertEquals("Each Day (feat. Matt Simons)", track.getName());
+		assertEquals("00:03:26", track.getDuration().toString());
 		
 	}
-
 	@Test
 	@DisplayName("Test Track Relationship Mappings")
 	void test1() {
-		assertNotNull(playlist);
-		assertEquals("Each Day (feat. Matt Simons)", playlist.getTracks().get(0).getName());
+		assertNotNull(track);
+		assertEquals("Cyrille Aimée", track.getArtist().getName());
+		assertEquals("Let's Get Lost", track.getAlbum().getName());
+		assertEquals("A", track.getPlaylists().get(0).getTitle());
 	}
 
 }

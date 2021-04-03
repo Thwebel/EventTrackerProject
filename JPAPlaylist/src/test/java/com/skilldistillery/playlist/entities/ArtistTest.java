@@ -1,13 +1,10 @@
 package com.skilldistillery.playlist.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,13 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlaylistTest {
-	
+class ArtistTest {
+
 	private static EntityManagerFactory emf;
 	
 	private EntityManager em;
 	
-	private Playlist playlist;
+	private Artist artist;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -38,31 +35,27 @@ class PlaylistTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		playlist = em.find(Playlist.class, 1);
+		artist = em.find(Artist.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em = null;
-		playlist = null;
+		artist = null;
 	}
 
 	@Test
-	@DisplayName("Test Playlist Mappings")
-	void test() {
-		assertNotNull(playlist);
-		assertEquals("A", playlist.getTitle());
-		assertEquals("First playlist I created for Ash", playlist.getDescription());
-		assertEquals("Webel", playlist.getCurator());
-		assertEquals("2018-02-14T10:30:30", playlist.getDateCreated().toString());
+	@DisplayName("Test Track Mappings")
+	void test0() {
+		assertNotNull(artist);
+		assertEquals("Cyrille Aimée", artist.getName());
 		
 	}
-
 	@Test
 	@DisplayName("Test Track Relationship Mappings")
 	void test1() {
-		assertNotNull(playlist);
-		assertEquals("Each Day (feat. Matt Simons)", playlist.getTracks().get(0).getName());
+		assertNotNull(artist);
+		assertEquals("https://www.youtube.com/watch?v=IBBqpYlHHpY&ab_channel=CyrilleAim%C3%A9e-Topic", artist.getTracks().get(0).getYoutubeLink());
+		assertEquals("Let's Get Lost", artist.getAlbums().get(0).getName());
 	}
-
 }
