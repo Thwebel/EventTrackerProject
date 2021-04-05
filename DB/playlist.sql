@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `playlist_has_track` (
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
-DROP USER IF EXISTS musicuser@localhost;
+-- DROP USER IF EXISTS musicuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 CREATE USER 'musicuser'@'localhost' IDENTIFIED BY 'musicuser';
 
@@ -185,4 +185,3 @@ INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 1);
 INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 2);
 
 COMMIT;
-
