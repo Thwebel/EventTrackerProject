@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Artist {
 	
@@ -27,9 +29,11 @@ public class Artist {
 	private String description;
 	
 	@OneToMany(mappedBy = "artist")
+	@JsonIgnoreProperties(value={"artist"})
 	private List<Album> albums;
 	
 	@OneToMany(mappedBy = "artist")
+	@JsonIgnoreProperties(value={"artist", "album"})
 	private List<Track> tracks;
 	
 // Methods

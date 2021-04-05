@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity 
 public class Playlist {
 	
@@ -34,6 +36,7 @@ public class Playlist {
 	@UpdateTimestamp
 	private LocalDateTime lastUpdated;
 	
+	@JsonIgnoreProperties(value={"playlists"})
 	@ManyToMany(mappedBy = "playlists")
 	private List<Track> tracks;
 

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Album {
 	
@@ -30,9 +32,11 @@ public class Album {
 	
 	@ManyToOne
 	@JoinColumn(name = "artist_id")
+	@JsonIgnoreProperties(value={"albums", "tracks"})
 	private Artist artist;
 	
 	@OneToMany(mappedBy = "album")
+	@JsonIgnoreProperties(value={"album", "artist"})
 	private List<Track> tracks;
 
 	public Album() {

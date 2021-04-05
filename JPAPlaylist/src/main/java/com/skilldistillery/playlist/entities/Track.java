@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Track {
 	
@@ -36,10 +38,12 @@ public class Track {
 	
 	@ManyToOne
 	@JoinColumn(name="artist_id")
+	@JsonIgnoreProperties(value={"tracks", "albums"})
 	private Artist artist;
 	
 	@ManyToOne
 	@JoinColumn(name="album_id")
+	@JsonIgnoreProperties(value={"tracks", "artist"})
 	private Album album;
 	
 	@ManyToMany
