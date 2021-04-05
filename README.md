@@ -2,6 +2,7 @@
 
 
 ## Overview
+This project will allow users to create playlists containing music of unsigned  musicians. Amateur music has never been easier to create, share, and enjoy. But often these talented musicians are left off of major streaming services. This site intends to provide a quick and easy way to create playlists containing any type of musician, professional or otherwise. The site will not host the music itself, but will provide links to the tracks. 
 
 ## How to Run
 TODO: Link to deployed app, login info if needed
@@ -12,16 +13,6 @@ TODO: Link to deployed app, login info if needed
 |-------------|----------------|--------------|----------------------|
 |Get          | `api/playlists`|              | List&lt;Playlist&gt; |
 |Get          | `api/playlists/{id}`|         | Playlist             |
-|Post          | `api/playlists`| {
-        "title": "Best Baroque Bangers",
-        "description": "Nothing bumps quite like a baroque fugue blasting consonant musical math into your ears",
-        "curator": "Webel",
-        "dateCreated": "2018-02-14T10:30:30",
-        "lastUpdated": "2018-02-14T10:30:30",
-        "tracks": []
-    }         | Playlist             |
-|Get          | `api/playlists/{id}`|         | Playlist             |
-|Get          | `api/playlists/{id}`|         | Playlist             |
-|Get          | `api/playlists/{id}`|         | Playlist             |
-|Get          | `api/playlists/{id}`|         | Playlist             |
-|Get          | `api/playlists/{id}`|         | Playlist             |
+|Post         | `api/playlists`| Playlist     | Created Playlist + Location |
+|Put          | `api/playlists/{id}`| Playlist| Updated Playlist     |
+|Delete       | `api/playlists/{id}`|         | Playlist             |
