@@ -80,12 +80,20 @@ public class TrackController {
 		try {
 			track = tService.update(track, id);
 
-			if (track != null) {
-				resp.setStatus(200);
-				resp.setHeader("Location", req.getRequestURL().toString());
+			if (track != null ) {
+				
+				if(track.getId() == 0) {
+					resp.setStatus(404);
+					track = null;
+				} else {
+					resp.setStatus(200);
+					resp.setHeader("Location", req.getRequestURL().toString());
+				}
+				
 			} else {
 				resp.setStatus(400);
 			}
+			
 		} catch (Exception e) {
 			System.err.println(e);
 			resp.setStatus(400);

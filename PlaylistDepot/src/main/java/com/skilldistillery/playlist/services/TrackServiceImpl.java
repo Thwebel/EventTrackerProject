@@ -37,12 +37,11 @@ public class TrackServiceImpl implements TrackService {
 	@Override
 	public Track create(Track track) {
 		if(track != null) {
-			if(	track.getDescription() != null &&
-				track.getName() != null) {
+			if(track.getName() != null) {
 				
 				return tRepo.save(track);
 				
-			}else {
+			} else {
 				track = null;
 			}
 		}
@@ -64,6 +63,8 @@ public class TrackServiceImpl implements TrackService {
 			tr.setTrackNumber(track.getTrackNumber());
 			
 			tRepo.saveAndFlush(tr);
+		}else {
+			tr = new Track();
 		}
 		
 		return tr;

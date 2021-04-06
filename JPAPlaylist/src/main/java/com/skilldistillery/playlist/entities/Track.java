@@ -50,6 +50,7 @@ public class Track {
 	@JoinTable(name="playlist_has_track",
 			joinColumns=@JoinColumn(name="track_id"),
 			inverseJoinColumns=@JoinColumn(name="playlist_id"))
+	@JsonIgnoreProperties(value={"tracks", "artist"})
 	private List<Playlist> playlists;
 	
 // Methods 
