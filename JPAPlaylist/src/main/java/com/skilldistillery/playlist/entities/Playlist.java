@@ -28,6 +28,9 @@ public class Playlist {
 	
 	private String curator;
 	
+	@Column(name="youtube_link")
+	private String youtubeLink;
+	
 	@Column(name="date_created")
 	@CreationTimestamp
 	private LocalDateTime dateCreated;
@@ -85,6 +88,14 @@ public class Playlist {
 
 	public void setCurator(String curator) {
 		this.curator = curator;
+	}
+
+	public String getYoutubeLink() {
+		return youtubeLink;
+	}
+
+	public void setYoutubeLink(String youtubeLink) {
+		this.youtubeLink = youtubeLink;
 	}
 
 	public LocalDateTime getDateCreated() {
