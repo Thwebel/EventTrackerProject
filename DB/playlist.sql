@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   `curator` VARCHAR(100) NULL,
   `date_created` DATETIME NULL,
   `last_updated` DATETIME NULL,
+  `youtube_link` VARCHAR(800) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -123,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `playlist_has_track` (
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
--- DROP USER IF EXISTS musicuser@localhost;
+DROP USER IF EXISTS musicuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 CREATE USER 'musicuser'@'localhost' IDENTIFIED BY 'musicuser';
 
@@ -138,7 +139,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`) VALUES (1, 'A', 'First playlist I created for Ash', 'Webel', '2018-02-14 10:30:30', '2018-02-14 10:30:30');
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (1, 'A', 'First playlist I created for Ash', 'Webel', '2018-02-14 10:30:30', '2018-02-14 10:30:30', NULL);
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (2, 'Cowboy Bebop | Lofi Hiphop & Jazzhop Mix', 'a tribute mix to the anime that got my channel on the map. I doubt any of you would know this but the first mix I ever made was a Cowboy Bebop one. It went somewhat viral reaching almost 2 million views before it got taken down... Well, it\'s been over a year now and I feel like I\'ve complied some of the best jazzy Bebop vibes you can find. Its a million times better than my original mix and I\'m quite proud of it. Hope you guys love it ', 'Ambition', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=vWUHoAGRTHU&t=2508s&ab_channel=Ambition');
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (3, 'Japanese songs you need to have in your playlist', 'These are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well\nThese are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well\nThese are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well', '\nkneon', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=UZ7oOhhPEWU&t=3718s&ab_channel=kneon');
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (4, 'Lofi Coding Mix 1 [Stay Home Edition]', 'Chill beats', 'code and chill', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=rJdHvKWvk3Q&t=908s&ab_channel=codeandchill');
 
 COMMIT;
 
@@ -185,3 +189,4 @@ INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 1);
 INSERT INTO `playlist_has_track` (`playlist_id`, `track_id`) VALUES (1, 2);
 
 COMMIT;
+
