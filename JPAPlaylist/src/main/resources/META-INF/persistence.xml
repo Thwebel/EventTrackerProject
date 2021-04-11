@@ -13,6 +13,7 @@
     <class>com.skilldistillery.playlist.entities.Artist</class>
     <class>com.skilldistillery.playlist.entities.Playlist</class>
     <class>com.skilldistillery.playlist.entities.Track</class>
+    <class>com.skilldistillery.playlist.entities.User</class>
     <!-- entities -->
 
     <properties>

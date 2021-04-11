@@ -16,6 +16,25 @@ CREATE SCHEMA IF NOT EXISTS `playlistdb` DEFAULT CHARACTER SET utf8 ;
 USE `playlistdb` ;
 
 -- -----------------------------------------------------
+-- Table `User`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `User` ;
+
+CREATE TABLE IF NOT EXISTS `User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `first_name` VARCHAR(200) NULL,
+  `last_name` VARCHAR(200) NULL,
+  `date_created` DATE NULL,
+  `active` TINYINT NOT NULL DEFAULT 1,
+  `image` VARCHAR(600) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `playlist`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `playlist` ;
@@ -28,7 +47,14 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   `date_created` DATETIME NULL,
   `last_updated` DATETIME NULL,
   `youtube_link` VARCHAR(800) NULL,
-  PRIMARY KEY (`id`))
+  `User_id` INT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  INDEX `fk_playlist_User1_idx` (`User_id` ASC),
+  CONSTRAINT `fk_playlist_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -135,14 +161,24 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
+-- Data for table `User`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `playlistdb`;
+INSERT INTO `User` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `date_created`, `active`, `image`) VALUES (1, 'thwebel', 'playlisttranslator@gmail.com', 'password', 'Tom', 'Web', '2021-04-10', 1, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `playlist`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (1, 'A', 'First playlist I created for Ash', 'Webel', '2018-02-14 10:30:30', '2018-02-14 10:30:30', NULL);
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (2, 'Cowboy Bebop | Lofi Hiphop & Jazzhop Mix', 'a tribute mix to the anime that got my channel on the map. I doubt any of you would know this but the first mix I ever made was a Cowboy Bebop one. It went somewhat viral reaching almost 2 million views before it got taken down... Well, it\'s been over a year now and I feel like I\'ve complied some of the best jazzy Bebop vibes you can find. Its a million times better than my original mix and I\'m quite proud of it. Hope you guys love it ', 'Ambition', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=vWUHoAGRTHU&t=2508s&ab_channel=Ambition');
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (3, 'Japanese songs you need to have in your playlist', 'These are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well\nThese are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well\nThese are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well', '\nkneon', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=UZ7oOhhPEWU&t=3718s&ab_channel=kneon');
-INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`) VALUES (4, 'Lofi Coding Mix 1 [Stay Home Edition]', 'Chill beats', 'code and chill', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=rJdHvKWvk3Q&t=908s&ab_channel=codeandchill');
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`, `User_id`) VALUES (1, 'A', 'First playlist I created for Ash', 'Webel', '2018-02-14 10:30:30', '2018-02-14 10:30:30', NULL, 1);
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`, `User_id`) VALUES (2, 'Cowboy Bebop | Lofi Hiphop & Jazzhop Mix', 'a tribute mix to the anime that got my channel on the map. I doubt any of you would know this but the first mix I ever made was a Cowboy Bebop one. It went somewhat viral reaching almost 2 million views before it got taken down... Well, it\'s been over a year now and I feel like I\'ve complied some of the best jazzy Bebop vibes you can find. Its a million times better than my original mix and I\'m quite proud of it. Hope you guys love it ', 'Ambition', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=vWUHoAGRTHU&t=2508s&ab_channel=Ambition', 1);
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`, `User_id`) VALUES (3, 'Japanese songs you need to have in your playlist', 'These are some songs from my playlist that I really like and I want to share them with more people so I made this video. Hope you all will like it as well!', '\nkneon', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=UZ7oOhhPEWU&t=3718s&ab_channel=kneon', 1);
+INSERT INTO `playlist` (`id`, `title`, `description`, `curator`, `date_created`, `last_updated`, `youtube_link`, `User_id`) VALUES (4, 'Lofi Coding Mix 1 [Stay Home Edition]', 'Chill beats', 'code and chill', '2018-02-14 10:30:30', '2018-02-14 10:30:30', 'https://www.youtube.com/watch?v=rJdHvKWvk3Q&t=908s&ab_channel=codeandchill', 1);
 
 COMMIT;
 

@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -42,6 +44,11 @@ public class Playlist {
 	@JsonIgnoreProperties(value={"playlists"})
 	@ManyToMany(mappedBy = "playlists")
 	private List<Track> tracks;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonIgnoreProperties(value = "playlsits")
+	private User user;
 
 	// Methods
 	
@@ -120,6 +127,14 @@ public class Playlist {
 
 	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
