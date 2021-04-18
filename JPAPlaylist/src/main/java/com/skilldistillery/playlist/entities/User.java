@@ -33,7 +33,9 @@ public class User {
 	
 	private LocalDate dateCreated;
 	
-	private boolean active;
+	private boolean enabled;
+	
+	private String role;
 	
 	private String image;
 	
@@ -107,12 +109,20 @@ public class User {
 		this.dateCreated = dateCreated;
 	}
 
-	public boolean isActive() {
-		return active;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getImage() {
@@ -155,10 +165,13 @@ public class User {
 		StringBuilder builder = new StringBuilder();
 		builder.append("User [id=").append(id).append(", username=").append(username).append(", email=").append(email)
 				.append(", password=").append(password).append(", fName=").append(fName).append(", lName=")
-				.append(lName).append(", dateCreated=").append(dateCreated).append(", active=").append(active)
-				.append(", image=").append(image).append("]");
+				.append(lName).append(", dateCreated=").append(dateCreated).append(", enabled=").append(enabled)
+				.append(", role=").append(role).append(", image=").append(image).append("]");
 		return builder.toString();
 	}
+
+	
+	
 	
 	
 }

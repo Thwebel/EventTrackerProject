@@ -12,22 +12,24 @@
 	<header id="header"></header>
 	<main id="main">
 		<!-- Get PL By Id Form-->
+		<h1>Find a Playlist</h1>
 		<form name="idForm" method="GET">
 			<label for="getPLId">Find Playlist by Id</label>
-			<input type="text" name="id" id="getPLId" placeholder="Playlist Id">
-			<input type="submit" value="Search" id="getId">
+			<input type="text" name="id" id="getPLId" placeholder="Playlist Id"/>
+			<input type="submit" value="Search" id="getId"/>
 		</form>
 		<br>
 		<br>
 		<!-- Create PL Form -->
-		<form name="createPL" method="POST">
+		<h1>Create a Playlist</h1>
+		<form name="createPLForm" method="POST" id="createFrom"> 
 			<!-- Title -->
 			<label for="title">Playlist Title</label>
 			<input type="text" name="title" id="title" placeholder="Title">
 			<br>
 			<!-- Description -->
-			<textarea name="decription" id="decription" cols="25" rows="6" placeholder="Decription..."></textarea>
-			<label for="decription">Describe this Playlist</label>
+			<textarea name="description" id="description" cols="25" rows="6" placeholder="Decription..."></textarea>
+			<label for="description">Describe this Playlist</label>
 			<br>
 			<!-- Curator -->
 			<label for="curator">Who put this Playlist together?</label>
@@ -40,8 +42,21 @@
 			<!-- Submit -->
 			<input type="submit" value="Create" id="createPlayList">
 		</form>
+		
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
 
-		<div id="errors"></div>
+		<div id="errors">errors</div>
 		<div id="playlistDetails"></div>
 		<div id="playlistTable"></div>
 

@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS `User` (
   `first_name` VARCHAR(200) NULL,
   `last_name` VARCHAR(200) NULL,
   `date_created` DATE NULL,
-  `active` TINYINT NOT NULL DEFAULT 1,
+  `enabled` TINYINT NOT NULL DEFAULT 1,
+  `role` VARCHAR(100) NULL,
   `image` VARCHAR(600) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -165,7 +166,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `playlistdb`;
-INSERT INTO `User` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `date_created`, `active`, `image`) VALUES (1, 'thwebel', 'playlisttranslator@gmail.com', 'password', 'Tom', 'Web', '2021-04-10', 1, NULL);
+INSERT INTO `User` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `date_created`, `enabled`, `role`, `image`) VALUES (1, 'thwebel', 'playlisttranslator@gmail.com', 'password', 'Tom', 'Web', '2021-04-10', 1, NULL, NULL);
 
 COMMIT;
 

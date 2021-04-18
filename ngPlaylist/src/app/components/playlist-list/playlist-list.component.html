@@ -1,0 +1,23 @@
+<h1>Playlists!</h1>
+<!-- All Playlists display -->
+<table *ngIf='!selected' class='table table-bordered table-dark'>
+  <thead class="thead-light">
+    <tr>
+      <th>Title</th>
+      <th>Curator</th>
+      <th>Listen(if available)</th>
+      <th>Track Count</th>
+      <th *ngIf="deleting">Delete Playlist</th>
+    </tr>
+  </thead>
+  <tbody class="tbody-dark">
+    <tr *ngFor='let playlist of playlists'>
+      <td (click)='displayPlaylist(playlist)'>{{playlist.title}}</td>
+      <td>{{playlist.curator}}</td>
+      <td><a href={{playlist.youtubeLink}}>Listen on youtube</a></td>
+      <td>{{getTrackCount(playlist)}} tracks</td>
+      <td *ngIf="deleting"><button class="btn btn-danger" (click)="deletePlaylist(playlist.id)">X</button></td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-dark" (click)="displayDelete()">{{deleteBtnMsg}}</button>
