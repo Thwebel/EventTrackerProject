@@ -29,7 +29,7 @@ public class Artist {
 	
 	private String description;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "artist")
+	@OneToMany(mappedBy = "artist")
 	@JsonIgnoreProperties(value={"artist"})
 	private List<Album> albums;
 	

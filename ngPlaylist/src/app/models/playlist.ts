@@ -1,3 +1,5 @@
+import { Track } from "./track";
+
 export class Playlist {
 
   id:number;
@@ -7,13 +9,13 @@ export class Playlist {
   youtubeLink:string;
   dateCreated:string;
   lastUpdated:string;
-  tracks: any[];
+  tracks: Track[];
 
 
   constructor( id?:number, title?:string,
     description?:string, curator?:string,
     youtubeLink?:string, dateCreated?:string,
-    lastUpdated?:string, tracks?:any[])
+    lastUpdated?:string, tracks?:Track[])
   {
     this.id = id;
     this.title = title;

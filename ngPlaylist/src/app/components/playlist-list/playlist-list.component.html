@@ -1,6 +1,6 @@
 <!-- <h1>Playlists!</h1> -->
 <!-- All Playlists display -->
-<div *ngIf="!selected && !newPlaylist && !updatedPlaylist">
+<div *ngIf="!selected && !newPlaylist && !updatedPlaylist && !newTrack">
   <table *ngIf='!selected' class='table table-bordered table-dark'>
     <thead class="thead-light">
       <tr>
@@ -28,7 +28,7 @@
 <!-- ** End All Playlists display ** -->
 
 <!-- Single Playlist View -->
-<div *ngIf="selected" class="container">
+<div *ngIf="selected && !newTrack" class="container">
   <h2>{{selected.title}} <span class="singleDispSpan">Curated By {{selected.curator}}</span></h2>
   <div class="row">
     <div class="col-md-6">
@@ -46,7 +46,7 @@
     </div>
     <div class="col-md-6" *ngIf='!selected.tracks.length'>
       <h5>This Playlist's Tracks have not been added</h5>
-      <button class="btn btn-dark">Add Tracks</button>
+      <button class="btn btn-dark" (click)='displayAddTrack()'>Add Tracks</button>
       <a href={{selected.youtubeLink}} id="viewOnYTbtn" class="btn btn-dark" *ngIf="selected.youtubeLink">View Playlist On Youtube</a>
     </div>
     <!-- If Tracks Provided -->
@@ -83,7 +83,7 @@
       <!-- Btns when Tracks are displayed -->
       <div class="row">
         <div class="col-md-6" *ngIf='selected.tracks.length'>
-          <button class="btn btn-dark">Add Tracks</button>
+          <button class="btn btn-dark" (click)='displayAddTrack()'>Add Tracks</button>
         </div>
         <div class="col-md-6" *ngIf='selected.tracks.length'>
           <a href={{selected.youtubeLink}} id="viewOnYTbtnTwo" class="btn btn-dark" *ngIf="selected.youtubeLink">View Playlist On Youtube</a>
@@ -92,7 +92,7 @@
       <!-- ** End Btns when Tracks are displayed ** -->
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <button type="submit" class="btn btn-dark" (click)="displayUpdate(selected)" style="float: left;">Update This Playlist</button>
     <button type="submit" class="btn btn-dark" (click)="displayIndex()" style="float: right;">Back To All Playlists</button>
   </div>
@@ -100,7 +100,7 @@
 <!-- ** End Single Playlist View ** -->
 
 <!-- Creation From -->
-<div class="container" *ngIf="newPlaylist">
+<div class="container" *ngIf="newPlaylist && !newTrack">
   <form>
     <h2>Create a playlist!</h2>
     <div class="row">
@@ -151,7 +151,7 @@
 <!-- ** End Creation From ** -->
 
 <!-- Creation From -->
-<div class="container" *ngIf="updatedPlaylist">
+<div class="container" *ngIf="updatedPlaylist && !newTrack">
   <form>
     <h2>Update your playlist!</h2>
     <div class="row">
@@ -200,3 +200,53 @@
   </form>
 </div>
 <!-- ** End Creation From ** -->
+
+<!-- Track Addition Form -->
+<div class="container" *ngIf="newTrack && selected">
+  <form>
+    <h2>Add Tracks To your Playlist</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Track Name" id="name" [(ngModel)]="newTrack.name">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="artist">Artist</label>
+          <input type="text" class="form-control" name="artist" placeholder="artist" id="artist" [(ngModel)]="newTrack.artist.name">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" name="description" placeholder="Add a quick description for your playlist..." id="description" cols="30" rows="10" [(ngModel)]="newTrack.description"></textarea>
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+            <label for="youtubeLink">Is your Track on Youtube? Add the link here!</label>
+            <input type="text" class="form-control" name="youtubeLink" id="youtubeLink" placeholder="Playlist Link" [(ngModel)]="newTrack.youtubeLink">
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="displayIndex()">Cancel</button>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="addTrackToPlayList(selected, newTrack)">Add Track Playlist!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

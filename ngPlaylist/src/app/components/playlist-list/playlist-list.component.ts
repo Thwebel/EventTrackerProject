@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from 'src/app/models/artist';
 import { Playlist } from 'src/app/models/playlist';
+import { Track } from 'src/app/models/track';
 import { PlaylistService } from 'src/app/services/playlist.service';
 
 @Component({
@@ -25,6 +27,9 @@ export class PlaylistListComponent implements OnInit {
 
   deleting: boolean = false;
   deleteBtnMsg: string = "Delete a Playlist";
+
+  // adding Tracks
+  newTrack: Track = null;
 
 // Methods
   constructor(
@@ -57,9 +62,15 @@ export class PlaylistListComponent implements OnInit {
         console.error("Encountered an error creating new Playlist: " + err);
       }
     )
-
-
   }
+
+  addTrackToPlayList(updtPlaylist: Playlist, newTrack:Track){
+    newTrack.album = null;
+    updtPlaylist.tracks.push(newTrack);
+    this.updatePlaylist(updtPlaylist);
+    newTrack = null;
+  }
+
   updatePlaylist(updatedPlaylist:Playlist){
     this.playlistSvc.update(updatedPlaylist).subscribe(
       data => {
@@ -94,6 +105,7 @@ export class PlaylistListComponent implements OnInit {
     this.newPlaylist = null;
     this.selected = null;
     this.updatedPlaylist = null;
+    this.newTrack = null;
   }
   // detailed display
   displayPlaylist(pl: Playlist){
@@ -102,6 +114,10 @@ export class PlaylistListComponent implements OnInit {
   // Create Playlist Form Display
   displayCreate(){
     this.newPlaylist = new Playlist();
+  }
+  displayAddTrack(){
+    this.newTrack = new Track();
+    this.newTrack.artist = new Artist();
   }
   displayUpdate(playlist:Playlist){
     this.updatedPlaylist = playlist;

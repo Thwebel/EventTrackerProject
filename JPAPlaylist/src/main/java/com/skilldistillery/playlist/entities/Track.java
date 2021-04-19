@@ -38,12 +38,12 @@ public class Track {
 	@Column(name="track_number")
 	private Integer trackNumber;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="artist_id")
 	@JsonIgnoreProperties(value={"tracks", "albums"})
 	private Artist artist;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST})
+	@ManyToOne
 	@JoinColumn(name="album_id")
 	@JsonIgnoreProperties(value={"tracks", "artist"})
 	private Album album;

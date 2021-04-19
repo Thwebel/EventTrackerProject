@@ -68,6 +68,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 			pl.setCurator(playlist.getCurator());
 			pl.setDescription(playlist.getDescription());
 			pl.setTitle(playlist.getTitle());
+			pl.setTracks(playlist.getTracks());
 			plRepo.saveAndFlush(pl);
 		}
 		
