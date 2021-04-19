@@ -35,12 +35,12 @@ public class Playlist {
 	@Column(name="youtube_link")
 	private String youtubeLink;
 	
-	@Column(name="date_created")
 	@CreationTimestamp
+	@Column(name="date_created")
 	private LocalDateTime dateCreated;
 
-	@Column(name="last_updated")
 	@UpdateTimestamp
+	@Column(name="last_updated")
 	private LocalDateTime lastUpdated;
 	
 	@JsonIgnoreProperties(value={"playlists"})
@@ -49,7 +49,7 @@ public class Playlist {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonIgnoreProperties(value = "playlsits")
+	@JsonIgnoreProperties(value = "playlists")
 	private User user;
 
 // Methods

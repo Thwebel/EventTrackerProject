@@ -17,7 +17,7 @@
     <!-- entities -->
 
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/playlistdb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=US/Mountain" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/playlistdb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=US/Eastern" />
       <property name="javax.persistence.jdbc.user" value="musicuser"/>
       <property name="javax.persistence.jdbc.password" value="musicuser" />
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
