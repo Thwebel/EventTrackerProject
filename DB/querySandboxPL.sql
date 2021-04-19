@@ -4,6 +4,7 @@ desc artist;
 desc playlist;
 desc playlist_has_track;
 desc track;
+desc user;
 
 select * from user;
 select * from artist;

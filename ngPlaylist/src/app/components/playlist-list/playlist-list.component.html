@@ -1,6 +1,6 @@
 <!-- <h1>Playlists!</h1> -->
 <!-- All Playlists display -->
-<div *ngIf="!selected && !newPlaylist">
+<div *ngIf="!selected && !newPlaylist && !updatedPlaylist">
   <table *ngIf='!selected' class='table table-bordered table-dark'>
     <thead class="thead-light">
       <tr>
@@ -92,7 +92,10 @@
       <!-- ** End Btns when Tracks are displayed ** -->
     </div>
   </div>
-  <button type="submit" class="btn btn-dark" (click)="displayIndex()">Back To All Playlists</button>
+  <div class="col-md-6">
+    <button type="submit" class="btn btn-dark" (click)="displayUpdate(selected)" style="float: left;">Update This Playlist</button>
+    <button type="submit" class="btn btn-dark" (click)="displayIndex()" style="float: right;">Back To All Playlists</button>
+  </div>
 </div>
 <!-- ** End Single Playlist View ** -->
 
@@ -150,7 +153,7 @@
 <!-- Creation From -->
 <div class="container" *ngIf="updatedPlaylist">
   <form>
-    <h2>Create a playlist!</h2>
+    <h2>Update your playlist!</h2>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">

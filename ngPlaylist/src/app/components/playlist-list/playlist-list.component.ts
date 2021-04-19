@@ -68,7 +68,7 @@ export class PlaylistListComponent implements OnInit {
         if(this.selected.tracks === null){
           this.selected.tracks = [];
         }
-        this.newPlaylist = null;
+        this.updatedPlaylist = null;
       },
       err => {
         console.error("Encountered an error creating new Playlist: " + err);
@@ -93,6 +93,7 @@ export class PlaylistListComponent implements OnInit {
   displayIndex(){
     this.newPlaylist = null;
     this.selected = null;
+    this.updatedPlaylist = null;
   }
   // detailed display
   displayPlaylist(pl: Playlist){
@@ -101,6 +102,10 @@ export class PlaylistListComponent implements OnInit {
   // Create Playlist Form Display
   displayCreate(){
     this.newPlaylist = new Playlist();
+  }
+  displayUpdate(playlist:Playlist){
+    this.updatedPlaylist = playlist;
+    this.selected = null;
   }
 
   // delete display
