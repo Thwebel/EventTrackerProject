@@ -1,23 +1,199 @@
-<h1>Playlists!</h1>
+<!-- <h1>Playlists!</h1> -->
 <!-- All Playlists display -->
-<table *ngIf='!selected' class='table table-bordered table-dark'>
-  <thead class="thead-light">
-    <tr>
-      <th>Title</th>
-      <th>Curator</th>
-      <th>Listen(if available)</th>
-      <th>Track Count</th>
-      <th *ngIf="deleting">Delete Playlist</th>
-    </tr>
-  </thead>
-  <tbody class="tbody-dark">
-    <tr *ngFor='let playlist of playlists'>
-      <td (click)='displayPlaylist(playlist)'>{{playlist.title}}</td>
-      <td>{{playlist.curator}}</td>
-      <td><a href={{playlist.youtubeLink}}>Listen on youtube</a></td>
-      <td>{{getTrackCount(playlist)}} tracks</td>
-      <td *ngIf="deleting"><button class="btn btn-danger" (click)="deletePlaylist(playlist.id)">X</button></td>
-    </tr>
-  </tbody>
-</table>
-<button class="btn btn-dark" (click)="displayDelete()">{{deleteBtnMsg}}</button>
+<div *ngIf="!selected && !newPlaylist">
+  <table *ngIf='!selected' class='table table-bordered table-dark'>
+    <thead class="thead-light">
+      <tr>
+        <th>Title</th>
+        <th>Curator</th>
+        <th>Listen(if available)</th>
+        <th>Track Count</th>
+        <th *ngIf="deleting">Delete Playlist</th>
+      </tr>
+    </thead>
+    <tbody class="tbody-dark">
+      <tr *ngFor='let playlist of playlists'>
+        <td (click)='displayPlaylist(playlist)'>{{playlist.title}}</td>
+        <td>{{playlist.curator}}</td>
+        <td *ngIf="playlist.youtubeLink"><a href={{playlist.youtubeLink}}>Listen on youtube</a></td>
+        <td *ngIf="!playlist.youtubeLink">No Link Provided</td>
+        <td>{{getTrackCount(playlist)}} tracks</td>
+        <td *ngIf="deleting"><button class="btn btn-danger" (click)="deletePlaylist(playlist.id)">X</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-dark" (click)="displayCreate()">Create a New Playlist</button>
+  <button class="btn btn-dark" (click)="displayDelete()" style="float: right;">{{deleteBtnMsg}}</button>
+</div>
+<!-- ** End All Playlists display ** -->
+
+<!-- Single Playlist View -->
+<div *ngIf="selected" class="container">
+  <h2>{{selected.title}} <span class="singleDispSpan">Curated By {{selected.curator}}</span></h2>
+  <div class="row">
+    <div class="col-md-6">
+      <p><span class="singleDispSpan">Created: {{selected.dateCreated | date:'longDate'}}</span></p>
+    </div>
+    <div class="col-md-6">
+      <p id="lastUpdateP"><span class="singleDispSpan" >Last Updated: {{selected.lastUpdated | date:'longDate'}}</span></p>
+    </div>
+  </div>
+  <div class="row">
+    <!-- If No Tracks Added -->
+    <div class="col-md-6" *ngIf='!selected.tracks.length'>
+      <h3>Description</h3>
+      <p id="singleDispDesc">{{selected.description}}</p>
+    </div>
+    <div class="col-md-6" *ngIf='!selected.tracks.length'>
+      <h5>This Playlist's Tracks have not been added</h5>
+      <button class="btn btn-dark">Add Tracks</button>
+      <a href={{selected.youtubeLink}} id="viewOnYTbtn" class="btn btn-dark" *ngIf="selected.youtubeLink">View Playlist On Youtube</a>
+    </div>
+    <!-- If Tracks Provided -->
+    <div class="col-md-4" *ngIf='selected.tracks.length'>
+      <h5>Description</h5>
+      <p id="singleDispDesc">{{selected.description}}</p>
+    </div>
+    <!-- Display if selected.tracks.length is > 0 -->
+    <!-- Track Display -->
+    <div class="col-md-8" *ngIf='selected.tracks.length'>
+      <h3 style="text-align: center;">Track List</h3>
+      <table class='table table-bordered table-dark'>
+        <thead class="thead-light">
+          <tr>
+            <th>Track</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Duration</th>
+            <th>Listen</th>
+          </tr>
+        </thead>
+        <tbody class="tbody-dark">
+          <tr *ngFor='let track of selected.tracks'>
+            <td>{{track.name}}</td>
+            <td>{{track.artist.name}}</td>
+            <td>{{track.album.name}}</td>
+            <td>{{track.duration.replace('00:0', '')}}</td>
+            <td *ngIf="track.youtubeLink"><a href={{track.youtubeLink}}>Listen on youtube</a></td>
+            <td *ngIf="!track.youtubeLink">No Link Provided</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- ** End Track Display ** -->
+      <!-- Btns when Tracks are displayed -->
+      <div class="row">
+        <div class="col-md-6" *ngIf='selected.tracks.length'>
+          <button class="btn btn-dark">Add Tracks</button>
+        </div>
+        <div class="col-md-6" *ngIf='selected.tracks.length'>
+          <a href={{selected.youtubeLink}} id="viewOnYTbtnTwo" class="btn btn-dark" *ngIf="selected.youtubeLink">View Playlist On Youtube</a>
+        </div>
+      </div>
+      <!-- ** End Btns when Tracks are displayed ** -->
+    </div>
+  </div>
+  <button type="submit" class="btn btn-dark" (click)="displayIndex()">Back To All Playlists</button>
+</div>
+<!-- ** End Single Playlist View ** -->
+
+<!-- Creation From -->
+<div class="container" *ngIf="newPlaylist">
+  <form>
+    <h2>Create a playlist!</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" name="title" placeholder="title" id="title" [(ngModel)]="newPlaylist.title">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="curator">Curator</label>
+          <input type="text" class="form-control" name="curator" placeholder="Who put this together?" id="curator" [(ngModel)]="newPlaylist.curator">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" name="description" placeholder="Add a quick description for your playlist..." id="description" cols="30" rows="10" [(ngModel)]="newPlaylist.description"></textarea>
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+            <label for="youtubeLink">Is your playlist on Youtube? Add the link here!</label>
+            <input type="text" class="form-control" name="youtubeLink" id="youtubeLink" placeholder="Playlist Link" [(ngModel)]="newPlaylist.youtubeLink">
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="displayIndex()">Cancel Creation</button>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="createPlaylist(newPlaylist)">Create Your Playlist!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- ** End Creation From ** -->
+
+<!-- Creation From -->
+<div class="container" *ngIf="updatedPlaylist">
+  <form>
+    <h2>Create a playlist!</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" name="title" placeholder="title" id="title" value={{updatedPlaylist.title}} [(ngModel)]="updatedPlaylist.title">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="curator">Curator</label>
+          <input type="text" class="form-control" name="curator" placeholder="Who put this together?" id="curator" value={{updatedPlaylist.curator}} [(ngModel)]="updatedPlaylist.curator">
+        </div>
+      </div>
+      <!--  col-md-6   -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" name="description" placeholder="Add a quick description for your playlist..." id="description" cols="30" rows="10" value={{updatedPlaylist.description}} [(ngModel)]="updatedPlaylist.description"></textarea>
+        </div>
+      </div>
+      <!--  col-md-6   -->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+            <label for="youtubeLink">Is your playlist on Youtube? Add the link here!</label>
+            <input type="text" class="form-control" name="youtubeLink" id="youtubeLink" placeholder="Playlist Link" value={{updatedPlaylist.youtubeLink}} [(ngModel)]="updatedPlaylist.youtubeLink">
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="displayIndex()">Cancel Creation</button>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-dark" (click)="updatePlaylist(updatedPlaylist)">Update Your Playlist!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- ** End Creation From ** -->

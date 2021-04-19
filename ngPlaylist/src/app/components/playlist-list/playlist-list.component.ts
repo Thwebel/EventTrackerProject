@@ -9,17 +9,26 @@ import { PlaylistService } from 'src/app/services/playlist.service';
 })
 export class PlaylistListComponent implements OnInit {
 
+// display vars
+  // Used in:
+  // index
   playlists:Playlist[] = [];
 
-// display vars
+  // createPlaylist
+  newPlaylist: Playlist = null;
+
+  // displayPlaylist, update Playlist
   selected: Playlist = null;
+
+  // update Playlist
+  updatedPlaylist: Playlist = null;
 
   deleting: boolean = false;
   deleteBtnMsg: string = "Delete a Playlist";
 
 // Methods
   constructor(
-    private playlistSvc:PlaylistService
+    private playlistSvc: PlaylistService
   ) { }
 
   ngOnInit(): void {
@@ -33,19 +42,67 @@ export class PlaylistListComponent implements OnInit {
     );
   }
 
-  createPlaylist(){
+  createPlaylist(playlist:Playlist){
+
+    this.playlistSvc.create(playlist).subscribe(
+      data => {
+        this.loadPlaylists();
+        this.selected = data;
+        if(this.selected.tracks === null){
+          this.selected.tracks = [];
+        }
+        this.newPlaylist = null;
+      },
+      err => {
+        console.error("Encountered an error creating new Playlist: " + err);
+      }
+    )
+
 
   }
-  updatePlaylist(){
-
+  updatePlaylist(updatedPlaylist:Playlist){
+    this.playlistSvc.update(updatedPlaylist).subscribe(
+      data => {
+        this.loadPlaylists();
+        this.selected = data;
+        if(this.selected.tracks === null){
+          this.selected.tracks = [];
+        }
+        this.newPlaylist = null;
+      },
+      err => {
+        console.error("Encountered an error creating new Playlist: " + err);
+      });
   }
-  deletePlaylist(){
+  deletePlaylist(id:number){
+    this.playlistSvc.destroy(id).subscribe(
+      data => {
+        console.log("Hello?");
 
+        this.loadPlaylists();
+      },
+      err => {
+        console.error("Observer Got an Error: " + err);
+      }
+    )
   }
 // displays
-  // detailed display
-  displayPlaylist(){
+
+
+  // table display
+  displayIndex(){
+    this.newPlaylist = null;
+    this.selected = null;
   }
+  // detailed display
+  displayPlaylist(pl: Playlist){
+    this.selected = pl;
+  }
+  // Create Playlist Form Display
+  displayCreate(){
+    this.newPlaylist = new Playlist();
+  }
+
   // delete display
   displayDelete(): void {
     if(this.deleting === false){

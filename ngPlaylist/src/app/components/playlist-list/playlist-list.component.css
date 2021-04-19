@@ -1,0 +1,21 @@
+/* Single / Detail Display Section */
+.singleDispSpan {
+  font-size: 15px;
+}
+#lastUpdateP {
+  text-align: right;
+}
+
+#singleDispDesc {
+  padding: 10px 10px 10px 5px;
+  text-indent: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+#viewOnYTbtn {
+  float: right;
+}
+#viewOnYTbtnTwo {
+  float: right;
+}

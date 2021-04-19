@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.playlist.entities.Playlist;
 import com.skilldistillery.playlist.repositories.PlaylistRepository;
+import com.skilldistillery.playlist.repositories.UserRepository;
 
 @Service
 @Transactional
@@ -17,6 +18,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Autowired
 	private PlaylistRepository plRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@Override
 	public List<Playlist> index() {
@@ -38,6 +42,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Override
 	public Playlist create(Playlist playlist) {
 		if(playlist != null) {
+			// Temporary, explicitly set User to user with id one (no need to check optional)
+			playlist.setUser(userRepo.findById(1).get());
 			if(	playlist.getCurator() != null &&
 				playlist.getDescription() != null &&
 				playlist.getTitle() != null) {
@@ -69,10 +75,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Override
 	public boolean delete(Integer id) {
-		Optional<Playlist> film = plRepo.findById(id);
+		Optional<Playlist> playlist = plRepo.findById(id);
 
-		if (film.isPresent()) {
-			plRepo.delete(film.get());
+		if (playlist.isPresent()) {
+			plRepo.delete(playlist.get());
 			return true;
 		}
 		return false;
