@@ -14,6 +14,6 @@ public interface PlaylistService {
 	
 	public Playlist update(Playlist playlist, Integer id);
 	
-	public boolean delete(Integer id);
+	public boolean delete(Integer id); 
 
 }

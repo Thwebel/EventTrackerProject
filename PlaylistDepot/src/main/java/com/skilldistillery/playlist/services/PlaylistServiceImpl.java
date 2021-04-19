@@ -41,6 +41,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Override
 	public Playlist create(Playlist playlist) {
+		
 		if(playlist != null) {
 			// Temporary, explicitly set User to user with id one (no need to check optional)
 			playlist.setUser(userRepo.findById(1).get());

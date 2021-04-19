@@ -2,6 +2,7 @@ package com.skilldistillery.playlist.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Album {
 	
 	private String artwork;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name = "artist_id")
 	@JsonIgnoreProperties(value={"albums", "tracks"})
 	private Artist artist;

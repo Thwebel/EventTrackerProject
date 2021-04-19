@@ -3,6 +3,7 @@ package com.skilldistillery.playlist.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Artist {
 	
 	private String description;
 	
-	@OneToMany(mappedBy = "artist")
+	@OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "artist")
 	@JsonIgnoreProperties(value={"artist"})
 	private List<Album> albums;
 	

@@ -1,8 +1,10 @@
 package com.skilldistillery.playlist.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +44,7 @@ public class Playlist {
 	private LocalDateTime lastUpdated;
 	
 	@JsonIgnoreProperties(value={"playlists"})
-	@ManyToMany(mappedBy = "playlists")
+	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "playlists")
 	private List<Track> tracks;
 	
 	@ManyToOne
@@ -50,8 +52,9 @@ public class Playlist {
 	@JsonIgnoreProperties(value = "playlsits")
 	private User user;
 
-	// Methods
+// Methods
 	
+	// Constructors 
 	
 	public Playlist() {
 		super();
@@ -64,6 +67,27 @@ public class Playlist {
 		this.description = description;
 		this.curator = curator;
 	}
+	
+	// Add / Remove Track
+	
+	public void addTrack (Track track) {
+		if(tracks == null) { 
+			tracks = new ArrayList<>();
+		}
+		if(!tracks.contains(track)) {
+			tracks.add(track);
+			track.addPlaylist(this);
+		}
+	}
+	
+	public void removeTrack(Track track) {
+		if(tracks != null && tracks.contains(track)) {
+			tracks.remove(track);
+			track.removePlaylist(this);
+		}
+	}
+
+	// Get / Set
 
 	public int getId() {
 		return id;
